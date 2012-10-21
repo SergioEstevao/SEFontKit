@@ -23,7 +23,7 @@
 		FFB90C3616345050003898F8 /* NSString+SEExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB90C3516345050003898F8 /* NSString+SEExtension.m */; };
 		FFB90C3C16345A32003898F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1AB79715B6E4A100A6F392 /* Foundation.framework */; };
 		FFB90C4B16345A95003898F8 /* SEFontMetricsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB90C4A16345A95003898F8 /* SEFontMetricsView.m */; };
-		FFB90C4E16345AD4003898F8 /* libCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB90C3B16345A32003898F8 /* libCore.a */; };
+		FFB90C4E16345AD4003898F8 /* libFontMetrics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB90C3B16345A32003898F8 /* libFontMetrics.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +49,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		FF1AB79115B6E4A100A6F392 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF1AB79115B6E4A100A6F392 /* FontMetrics.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FontMetrics.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1AB79515B6E4A100A6F392 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		FF1AB79715B6E4A100A6F392 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		FF1AB79915B6E4A100A6F392 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -70,10 +70,11 @@
 		FFB90C2616344D64003898F8 /* SEMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEMasterViewController.m; sourceTree = "<group>"; };
 		FFB90C3416345050003898F8 /* NSString+SEExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SEExtension.h"; sourceTree = "<group>"; };
 		FFB90C3516345050003898F8 /* NSString+SEExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SEExtension.m"; sourceTree = "<group>"; };
-		FFB90C3B16345A32003898F8 /* libCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFB90C3B16345A32003898F8 /* libFontMetrics.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFontMetrics.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FFB90C4716345A95003898F8 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		FFB90C4916345A95003898F8 /* SEFontMetricsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEFontMetricsView.h; sourceTree = "<group>"; };
 		FFB90C4A16345A95003898F8 /* SEFontMetricsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEFontMetricsView.m; sourceTree = "<group>"; };
+		FFB90C4F1634AFB3003898F8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFB90C4E16345AD4003898F8 /* libCore.a in Frameworks */,
+				FFB90C4E16345AD4003898F8 /* libFontMetrics.a in Frameworks */,
 				FF1AB79615B6E4A100A6F392 /* UIKit.framework in Frameworks */,
 				FF1AB79815B6E4A100A6F392 /* Foundation.framework in Frameworks */,
 				FF1AB79A15B6E4A100A6F392 /* CoreGraphics.framework in Frameworks */,
@@ -102,6 +103,7 @@
 		FF1AB78615B6E4A100A6F392 = {
 			isa = PBXGroup;
 			children = (
+				FFB90C4F1634AFB3003898F8 /* README.md */,
 				FFB90C3D16345A32003898F8 /* Core */,
 				FFB90C1216344D64003898F8 /* Demo */,
 				FF1AB79415B6E4A100A6F392 /* Frameworks */,
@@ -112,8 +114,8 @@
 		FF1AB79215B6E4A100A6F392 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				FF1AB79115B6E4A100A6F392 /* Demo.app */,
-				FFB90C3B16345A32003898F8 /* libCore.a */,
+				FF1AB79115B6E4A100A6F392 /* FontMetrics.app */,
+				FFB90C3B16345A32003898F8 /* libFontMetrics.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -204,12 +206,12 @@
 			);
 			name = Demo;
 			productName = FontInspector;
-			productReference = FF1AB79115B6E4A100A6F392 /* Demo.app */;
+			productReference = FF1AB79115B6E4A100A6F392 /* FontMetrics.app */;
 			productType = "com.apple.product-type.application";
 		};
-		FFB90C3A16345A32003898F8 /* Core */ = {
+		FFB90C3A16345A32003898F8 /* FontMetrics */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = FFB90C4416345A32003898F8 /* Build configuration list for PBXNativeTarget "Core" */;
+			buildConfigurationList = FFB90C4416345A32003898F8 /* Build configuration list for PBXNativeTarget "FontMetrics" */;
 			buildPhases = (
 				FFB90C3716345A32003898F8 /* Sources */,
 				FFB90C3816345A32003898F8 /* Frameworks */,
@@ -219,9 +221,9 @@
 			);
 			dependencies = (
 			);
-			name = Core;
+			name = FontMetrics;
 			productName = Core;
-			productReference = FFB90C3B16345A32003898F8 /* libCore.a */;
+			productReference = FFB90C3B16345A32003898F8 /* libFontMetrics.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -234,7 +236,7 @@
 				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "Sergio Estevao";
 			};
-			buildConfigurationList = FF1AB78B15B6E4A100A6F392 /* Build configuration list for PBXProject "Demo" */;
+			buildConfigurationList = FF1AB78B15B6E4A100A6F392 /* Build configuration list for PBXProject "FontMetrics" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -247,7 +249,7 @@
 			projectRoot = "";
 			targets = (
 				FF1AB79015B6E4A100A6F392 /* Demo */,
-				FFB90C3A16345A32003898F8 /* Core */,
+				FFB90C3A16345A32003898F8 /* FontMetrics */,
 			);
 		};
 /* End PBXProject section */
@@ -294,7 +296,7 @@
 /* Begin PBXTargetDependency section */
 		FFB90C4D16345ACD003898F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = FFB90C3A16345A32003898F8 /* Core */;
+			target = FFB90C3A16345A32003898F8 /* FontMetrics */;
 			targetProxy = FFB90C4C16345ACD003898F8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -372,7 +374,7 @@
 				GCC_PREFIX_HEADER = Demo/Prefix.pch;
 				INFOPLIST_FILE = Demo/Info.plist;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = Demo;
+				PRODUCT_NAME = FontMetrics;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -388,7 +390,7 @@
 				GCC_PREFIX_HEADER = Demo/Prefix.pch;
 				INFOPLIST_FILE = Demo/Info.plist;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = Demo;
+				PRODUCT_NAME = FontMetrics;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -431,7 +433,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		FF1AB78B15B6E4A100A6F392 /* Build configuration list for PBXProject "Demo" */ = {
+		FF1AB78B15B6E4A100A6F392 /* Build configuration list for PBXProject "FontMetrics" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FF1AB7B915B6E4A100A6F392 /* Debug */,
@@ -449,7 +451,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		FFB90C4416345A32003898F8 /* Build configuration list for PBXNativeTarget "Core" */ = {
+		FFB90C4416345A32003898F8 /* Build configuration list for PBXNativeTarget "FontMetrics" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FFB90C4516345A32003898F8 /* Debug */,
