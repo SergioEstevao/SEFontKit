@@ -1,5 +1,9 @@
-SEFontMetrics
+SEFontKit
 =============
+
+A library with some usefull extensions to UIFont.
+
+SEFontMetricView
 
 A extension to UITextField that allows to see the metrics of the font being used.
 
