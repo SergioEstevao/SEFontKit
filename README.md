@@ -4,8 +4,9 @@ SEFontKit
 A library with some usefull extensions to UIFont.
 
 SEFontMetricView
+________________
 
-A extension to UITextField that allows to see the metrics of the font being used.
+Inspired by this blog entry, the SEFontMetricView is an extension to UITextField that allows to see the metrics of the font being used in the text field.
 
 This view displays reference values for the following values:
 
