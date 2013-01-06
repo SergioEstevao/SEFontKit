@@ -16,3 +16,12 @@ This view displays reference values for the following values:
 - Cap Height: This value measures (in points) the maximum height of a capital character.
 - X Height: This value measures (in points) the height of the lowercase character "x".
 
+SEFontPickerViewController
+__________________________
+
+A View controller that allows you to pick a font from the system.
+
+SETextAttributesPickerViewController
+__________________________
+
+A ViewController that allos you to configure the attributes for an attributed string.(Still in development)

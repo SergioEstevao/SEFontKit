@@ -60,8 +60,7 @@ const NSInteger MinFontSize = 8;
     self.detailsTable.frame = CGRectMake(0, 
                                          fmax(70,self.font.lineHeight), 
                                          self.detailsTable.frame.size.width, 
-                                         self.view.frame.size.height-fmax(70,self.font.lineHeight));
-    //self.fontMetrics.font = self.font;
+                                         self.view.frame.size.height-fmax(70,self.font.lineHeight));    
     [self.fontMetrics setNeedsDisplay];
     [self.detailsTable reloadData];
 }
