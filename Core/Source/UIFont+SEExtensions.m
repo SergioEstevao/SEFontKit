@@ -38,7 +38,7 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"%@, %f", self.fontName, self.pointSize];
+	return [NSString stringWithFormat:@"%i pt %@", (int)self.pointSize, self.fontName];
 }
 
 @end

@@ -27,6 +27,11 @@
 		FFB90C3C16345A32003898F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1AB79715B6E4A100A6F392 /* Foundation.framework */; };
 		FFB90C4B16345A95003898F8 /* SEFontMetricsView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFB90C4A16345A95003898F8 /* SEFontMetricsView.m */; };
 		FFB90C4E16345AD4003898F8 /* libSEFontKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FFB90C3B16345A32003898F8 /* libSEFontKit.a */; };
+		FFE9E3011659A26900778E21 /* SETextEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE9E2FF1659A26800778E21 /* SETextEditViewController.m */; };
+		FFE9E3021659A26900778E21 /* SETextEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FFE9E3001659A26900778E21 /* SETextEditViewController.xib */; };
+		FFE9E304165A3CCF00778E21 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FFE9E303165A3CCF00778E21 /* QuartzCore.framework */; };
+		FFE9E311165A702200778E21 /* SEFontPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE9E30F165A702000778E21 /* SEFontPickerViewController.m */; };
+		FFE9E313165A76EB00778E21 /* SETextAttributesPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE9E2F41659634F00778E21 /* SETextAttributesPickerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +86,14 @@
 		FFB90C4916345A95003898F8 /* SEFontMetricsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEFontMetricsView.h; sourceTree = "<group>"; };
 		FFB90C4A16345A95003898F8 /* SEFontMetricsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEFontMetricsView.m; sourceTree = "<group>"; };
 		FFB90C4F1634AFB3003898F8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		FFE9E2F31659634F00778E21 /* SETextAttributesPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SETextAttributesPickerViewController.h; sourceTree = "<group>"; };
+		FFE9E2F41659634F00778E21 /* SETextAttributesPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SETextAttributesPickerViewController.m; sourceTree = "<group>"; };
+		FFE9E2FE1659A26800778E21 /* SETextEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SETextEditViewController.h; sourceTree = "<group>"; };
+		FFE9E2FF1659A26800778E21 /* SETextEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SETextEditViewController.m; sourceTree = "<group>"; };
+		FFE9E3001659A26900778E21 /* SETextEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SETextEditViewController.xib; path = ../Source/SETextEditViewController.xib; sourceTree = "<group>"; };
+		FFE9E303165A3CCF00778E21 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FFE9E30E165A702000778E21 /* SEFontPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SEFontPickerViewController.h; sourceTree = "<group>"; };
+		FFE9E30F165A702000778E21 /* SEFontPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SEFontPickerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFE9E304165A3CCF00778E21 /* QuartzCore.framework in Frameworks */,
 				FF6E9CE81639F242003BFFE9 /* CoreText.framework in Frameworks */,
 				FFB90C3C16345A32003898F8 /* Foundation.framework in Frameworks */,
 			);
@@ -131,6 +145,7 @@
 		FF1AB79415B6E4A100A6F392 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FFE9E303165A3CCF00778E21 /* QuartzCore.framework */,
 				FF6E9CE71639F242003BFFE9 /* CoreText.framework */,
 				FF1AB79515B6E4A100A6F392 /* UIKit.framework */,
 				FF1AB79715B6E4A100A6F392 /* Foundation.framework */,
@@ -159,6 +174,7 @@
 				FFB90C1916344D64003898F8 /* InfoPlist.strings */,
 				FFB90C1B16344D64003898F8 /* SEDetailViewController.xib */,
 				FFB90C1C16344D64003898F8 /* SEMasterViewController.xib */,
+				FFE9E3001659A26900778E21 /* SETextEditViewController.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -166,6 +182,8 @@
 		FFB90C1D16344D64003898F8 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				FFE9E2FE1659A26800778E21 /* SETextEditViewController.h */,
+				FFE9E2FF1659A26800778E21 /* SETextEditViewController.m */,
 				FFB90C3416345050003898F8 /* NSString+SEExtension.h */,
 				FFB90C3516345050003898F8 /* NSString+SEExtension.m */,
 				FFB90C1E16344D64003898F8 /* main.m */,
@@ -195,6 +213,10 @@
 				FFB90C4A16345A95003898F8 /* SEFontMetricsView.m */,
 				FF6E9CE41639F1DD003BFFE9 /* UIFont+SEExtensions.h */,
 				FF6E9CE51639F1DD003BFFE9 /* UIFont+SEExtensions.m */,
+				FFE9E2F31659634F00778E21 /* SETextAttributesPickerViewController.h */,
+				FFE9E2F41659634F00778E21 /* SETextAttributesPickerViewController.m */,
+				FFE9E30E165A702000778E21 /* SEFontPickerViewController.h */,
+				FFE9E30F165A702000778E21 /* SEFontPickerViewController.m */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -276,6 +298,7 @@
 				FFB90C2B16344D64003898F8 /* InfoPlist.strings in Resources */,
 				FFB90C2C16344D64003898F8 /* SEDetailViewController.xib in Resources */,
 				FFB90C2D16344D64003898F8 /* SEMasterViewController.xib in Resources */,
+				FFE9E3021659A26900778E21 /* SETextEditViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,6 +314,7 @@
 				FFB90C3016344D64003898F8 /* SEDetailViewController.m in Sources */,
 				FFB90C3216344D64003898F8 /* SEMasterViewController.m in Sources */,
 				FFB90C3616345050003898F8 /* NSString+SEExtension.m in Sources */,
+				FFE9E3011659A26900778E21 /* SETextEditViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +324,8 @@
 			files = (
 				FFB90C4B16345A95003898F8 /* SEFontMetricsView.m in Sources */,
 				FF6E9CE91639F337003BFFE9 /* UIFont+SEExtensions.m in Sources */,
+				FFE9E311165A702200778E21 /* SEFontPickerViewController.m in Sources */,
+				FFE9E313165A76EB00778E21 /* SETextAttributesPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

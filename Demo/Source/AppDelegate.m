@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 
 #import "SEMasterViewController.h"
-
+#import "SETextEditViewController.h"
 #import "SEDetailViewController.h"
 
 @implementation AppDelegate
@@ -18,11 +18,18 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    UITabBarController * tabController = [[UITabBarController alloc] init];
+    NSArray * viewControllers = nil;
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         SEMasterViewController *masterViewController = [[SEMasterViewController alloc] initWithNibName:@"SEMasterViewController" bundle:nil];
         self.navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
-        self.window.rootViewController = self.navigationController;
+        self.navigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Metrics" image:nil tag:0];
+        
+        UINavigationController * textEditViewController = [[UINavigationController alloc] initWithRootViewController:[[SETextEditViewController alloc] init]];
+        textEditViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Picker" image:nil tag:1];
+        
+        viewControllers = @[self.navigationController, textEditViewController];
     } else {
         SEMasterViewController *masterViewController = [[SEMasterViewController alloc] initWithNibName:@"SEMasterViewController" bundle:nil];
         UINavigationController *masterNavigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
@@ -33,11 +40,17 @@
     	masterViewController.detailViewController = detailViewController;
     	
         self.splitViewController = [[UISplitViewController alloc] init];
-        self.splitViewController.delegate = detailViewController;
         self.splitViewController.viewControllers = [NSArray arrayWithObjects:masterNavigationController, detailNavigationController, nil];
+        self.splitViewController.delegate = detailViewController;
+        self.splitViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Metrics" image:nil tag:0];
         
-        self.window.rootViewController = self.splitViewController;
+        self.navigationController = [[UINavigationController alloc] initWithRootViewController:[[SETextEditViewController alloc] init]];
+        self.navigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Picker" image:nil tag:1];
+
+        viewControllers = @[self.splitViewController, self.navigationController];
     }
+    tabController.viewControllers = viewControllers;
+    self.window.rootViewController = tabController;
     [self.window makeKeyAndVisible];
     return YES;
 }
