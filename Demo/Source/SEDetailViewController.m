@@ -189,33 +189,36 @@ const NSInteger MinFontSize = 8;
             switch (indexPath.row){
                 case (0):
                     cell.textLabel.text = NSLocalizedString(@"Point Size",@"Point Size");
-                    cell.textLabel.textColor = [UIColor blackColor];
                     cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.pointSize] stringValue];
                     break;
                 case (1):
-                    cell.textLabel.text = NSLocalizedString(@"Ascender",@"Ascender");
-                    cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.ascender] stringValue];
-                    cell.textLabel.textColor = self.fontMetrics.ascenderColor;
+                    cell.textLabel.text = NSLocalizedString(@"Line Height",@"Line Height");
+                    cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.lineHeight] stringValue];
                     break;
                 case (2):
-                    cell.textLabel.text = NSLocalizedString(@"Descender",@"Descender");
-                    cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.descender] stringValue];
-                    cell.textLabel.textColor = self.fontMetrics.descenderColor;
+                    cell.textLabel.text = NSLocalizedString(@"Ascender",@"Ascender");
+                    cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.ascender] stringValue];
+                    cell.accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0,0,22,44)];
+                    cell.accessoryView.backgroundColor = self.fontMetrics.ascenderColor;
                     break;
                 case (3):
-                    cell.textLabel.text = NSLocalizedString(@"Line Height",@"Line Height");
-                    cell.textLabel.textColor = [UIColor blackColor];
-                    cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.lineHeight] stringValue];
+                    cell.textLabel.text = NSLocalizedString(@"Descender",@"Descender");
+                    cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.descender] stringValue];
+                    cell.accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0,0,22,44)];
+                    cell.accessoryView.backgroundColor = self.fontMetrics.descenderColor;
                     break;
                 case (4):
                     cell.textLabel.text = NSLocalizedString(@"Cap Height",@"Cap Height");
                     cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.capHeight] stringValue];
-                    cell.textLabel.textColor = self.fontMetrics.capColor;
+                    cell.accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0,0,22,44)];
+                    cell.accessoryView.backgroundColor = self.fontMetrics.capColor;
                     break;
                 case (5):
                     cell.textLabel.text = NSLocalizedString(@"x Height",@"x Height");
                     cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.xHeight] stringValue];
-                    cell.textLabel.textColor = self.fontMetrics.xColor;
+                    cell.accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0,0,22,44)];
+                    cell.accessoryView.backgroundColor = self.fontMetrics.xColor;
+
                     break;
     
             }

@@ -10,6 +10,13 @@
 
 @implementation UIFont (SEExtensions)
 
++ (UIFont *) fontFromCTFont:(CTFontRef) fontRef{
+    NSString * fontName = (__bridge_transfer NSString*)CTFontCopyPostScriptName(fontRef);
+    CGFloat size = CTFontGetSize(fontRef);
+    UIFont * font = [UIFont fontWithName:fontName size:size];
+    return font;
+}
+
 - (CTFontRef) CTFontRef {
     CTFontRef ctFont = CTFontCreateWithName((__bridge CFStringRef)self.fontName,
                                             self.pointSize,
@@ -24,9 +31,11 @@
     }
     CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
     CGFontRef cgFont = CGFontCreateWithDataProvider(provider);
-    CFErrorRef localError = NULL;
+    CFErrorRef localError;
     if (!CTFontManagerRegisterGraphicsFont(cgFont, &localError)) {
-                *error = (__bridge NSError *)localError;
+        if ( error != nil){
+            *error = (__bridge_transfer NSError *)localError;
+        }
         return nil;
     }
     NSString * fontName = (__bridge_transfer NSString*)CGFontCopyPostScriptName(cgFont);
@@ -35,6 +44,34 @@
     CGDataProviderRelease(provider);
     return font;
 }
+
++ (NSString *) registerFontFromData:(NSData *)data withError:(NSError**) error{
+    CGDataProviderRef provider = CGDataProviderCreateWithCFData((__bridge CFDataRef)data);
+    CGFontRef cgFont = CGFontCreateWithDataProvider(provider);
+    CFErrorRef localError;
+    if (!CTFontManagerRegisterGraphicsFont(cgFont, &localError)) {
+        if ( error != nil){
+            *error = (__bridge_transfer NSError *)localError;
+        }
+        return nil;
+    }
+    NSString * fontName = (__bridge_transfer NSString*)CGFontCopyPostScriptName(cgFont);
+    return fontName;
+}
+
++ (BOOL) unregisterFontWithName:(NSString *)name withError:(NSError**) error{
+    CGFontRef cgFont = CGFontCreateWithFontName((__bridge CFStringRef)name);
+    CFErrorRef localError;
+    if (!CTFontManagerUnregisterGraphicsFont(cgFont, &localError)) {
+        if ( error != nil){
+            *error = (__bridge_transfer NSError *)localError;
+        }
+        return NO;
+    }
+    return YES;
+}
+
+
 
 - (NSString *)description
 {
