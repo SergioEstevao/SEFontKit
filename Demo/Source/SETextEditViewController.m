@@ -33,6 +33,9 @@
     // Do any additional setup after loading the view from its nib.
     self.navigationItem.title = @"Style Editor";
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editorClick:)];
+    if ( [self.textView respondsToSelector:@selector(setAttributedText:)]){
+        self.textView.attributedText = [[NSAttributedString alloc] initWithString:self.textView.text];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,14 +45,16 @@
 }
 
 - (void) editorClick:(id)sender {
-    _editRange = self.textView.selectedRange;
-    if (_editRange.length == 0 && _editRange.location == INT32_MAX){
-        _editRange = NSMakeRange(0, self.textView.attributedText.length);
-    }
-    SETextAttributesPickerViewController * textAttributes = [[SETextAttributesPickerViewController alloc] init];
-    textAttributes.delegate = self;
-    textAttributes.attributes = [self.textView.attributedText attributesAtIndex:_editRange.location longestEffectiveRange:NULL inRange:_editRange];
     
+    _editRange = self.textView.selectedRange;
+    SETextAttributesPickerViewController * textAttributes = [[SETextAttributesPickerViewController alloc] init];
+    if ( [self.textView respondsToSelector:@selector(setAttributedText:)]){
+        if (_editRange.length == 0 && _editRange.location == INT32_MAX){
+            _editRange = NSMakeRange(0, self.textView.attributedText.length);
+        }        
+        textAttributes.delegate = self;
+        textAttributes.attributes = [self.textView.attributedText attributesAtIndex:_editRange.location longestEffectiveRange:NULL inRange:_editRange];
+    }
     if ([[UIDevice currentDevice] userInterfaceIdiom] ==  UIUserInterfaceIdiomPad && self.popOver == nil ){
         self.popOver = [[UIPopoverController alloc] initWithContentViewController:textAttributes];
         [self.popOver presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
@@ -68,10 +73,12 @@
 
 - (void) textAttributesPickerViewController:(SETextAttributesPickerViewController*) fontPicker selectedAttributes:(NSDictionary*)attributes {
     
-    NSMutableAttributedString * newText = [[NSMutableAttributedString alloc] initWithAttributedString:self.textView.attributedText];
-    [newText setAttributes:attributes range:_editRange];
+    if ( [self.textView respondsToSelector:@selector(setAttributedText:)]){
+        NSMutableAttributedString * newText = [[NSMutableAttributedString alloc] initWithAttributedString:self.textView.attributedText];
+        [newText setAttributes:attributes range:_editRange];
 
-    self.textView.attributedText = newText;
+        self.textView.attributedText = newText;
+    }
 }
 
 @end

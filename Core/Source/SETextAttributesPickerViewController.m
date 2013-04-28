@@ -78,33 +78,34 @@ const NSInteger SE_MinFontSize = 8;
 }
 
 - (void)refreshView {
-    self.font = [self.attributes objectForKey:NSFontAttributeName];
+    self.font = [self.attributes objectForKey:(NSString *)NSFontAttributeName];
     if ( self.font == nil){
         self.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     }
     self.fontFamilyCell.textLabel.text = self.font.fontName;
     self.fontSizeCell.textLabel.text = [NSString stringWithFormat:@"Size: %i pt", (int)_font.pointSize ];
     
-    self.fontTraitsUnderlineCell.accessoryType = [self.attributes objectForKey:NSUnderlineStyleAttributeName] == nil ? UITableViewCellAccessoryNone:UITableViewCellAccessoryCheckmark;
+    self.fontTraitsUnderlineCell.accessoryType = [self.attributes objectForKey:(NSString *)kCTUnderlineStyleAttributeName] == nil ? UITableViewCellAccessoryNone:UITableViewCellAccessoryCheckmark;
     
-    self.fontTraitsStrokeCell.accessoryType = [self.attributes objectForKey:NSStrikethroughStyleAttributeName] == nil ? UITableViewCellAccessoryNone:UITableViewCellAccessoryCheckmark;
+    self.fontTraitsStrokeCell.accessoryType = [self.attributes objectForKey:(NSString *)kCTStrokeWidthAttributeName] == nil ? UITableViewCellAccessoryNone:UITableViewCellAccessoryCheckmark;
 }
 
 - (void)updateAttributes {
+    
     NSMutableDictionary * attributes = [NSMutableDictionary dictionaryWithDictionary:self.attributes];
-    [attributes setObject:self.font forKey:NSFontAttributeName];
+    [attributes setObject:self.font forKey:(NSString *)NSFontAttributeName];
     
     if ( self.fontTraitsUnderlineCell.accessoryType == UITableViewCellAccessoryCheckmark){
-        [attributes setObject:@(NSUnderlineStyleSingle) forKey:NSUnderlineStyleAttributeName];
+        [attributes setObject:@(NSUnderlineStyleSingle) forKey:(NSString *)kCTUnderlineStyleAttributeName];
     } else {
-        [attributes removeObjectForKey:NSUnderlineStyleAttributeName];
+        [attributes removeObjectForKey:(NSString *)kCTUnderlineStyleAttributeName];
     }
     
-    if ( self.fontTraitsStrokeCell.accessoryType == UITableViewCellAccessoryCheckmark){
-        [attributes setObject:@(NSUnderlineStyleSingle) forKey:NSStrikethroughStyleAttributeName];
-    } else {
-        [attributes removeObjectForKey:NSStrikethroughStyleAttributeName];
-    }
+//    if ( self.fontTraitsStrokeCell.accessoryType == UITableViewCellAccessoryCheckmark){
+//        [attributes setObject:@(NSUnderlineStyleSingle) forKey:(NSString *)kCTStrokeWidthAttributeName];
+//    } else {
+//        [attributes removeObjectForKey:(NSString *)kCTStrokeWidthAttributeName];
+//    }
     
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(textAttributesPickerViewController:selectedAttributes:)]){
         [self.delegate textAttributesPickerViewController:self selectedAttributes:attributes];

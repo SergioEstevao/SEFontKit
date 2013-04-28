@@ -7,3 +7,7 @@
     #import <UIKit/UIKit.h>
     #import <CoreText/CoreText.h>
 #endif
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_6_0
+@compatibility_alias NSFontAttributeName kCTFontAttributeName;
+#endif
