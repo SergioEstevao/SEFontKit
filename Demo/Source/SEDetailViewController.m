@@ -7,6 +7,7 @@
 //
 
 #import "SEDetailViewController.h"
+#import "SEFontMetricsView.h"
 
 const NSInteger MaxFontSize = 60;
 const NSInteger MinFontSize = 8;
@@ -16,6 +17,9 @@ const NSInteger MinFontSize = 8;
 }
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) UIFont * font;
+@property (strong, nonatomic) IBOutlet UITableView *detailsTable;
+@property (strong, nonatomic) IBOutlet SEFontMetricsView *fontMetrics;
+
 - (void)configureView;
 @end
 

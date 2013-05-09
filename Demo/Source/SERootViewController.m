@@ -11,6 +11,7 @@
 #import "SEMasterViewController.h"
 #import "SEDetailViewController.h"
 #import "SETextEditViewController.h"
+#import "SEFontMetricsView.h"
 
 @interface SERootViewController ()
     @property (strong, nonatomic) UINavigationController *navigationController;
