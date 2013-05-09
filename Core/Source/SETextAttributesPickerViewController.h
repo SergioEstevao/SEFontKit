@@ -20,7 +20,7 @@
 
 @interface SETextAttributesPickerViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property(nonatomic, weak) id<SETextAttributesPickerViewControllerDelegage> delegate;
+@property(nonatomic, assign) id<SETextAttributesPickerViewControllerDelegage> delegate;
 
 @property  (strong, nonatomic) NSDictionary * attributes;
 

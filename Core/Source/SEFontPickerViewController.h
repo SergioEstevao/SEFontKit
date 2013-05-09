@@ -18,6 +18,6 @@
 
 @interface SEFontPickerViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate>
 
-@property(nonatomic, weak) id<SEFontPickerViewControllerDelegage> delegate;
+@property(nonatomic, assign) id<SEFontPickerViewControllerDelegage> delegate;
 
 @end

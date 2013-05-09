@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SERootViewController : UIViewController
+@interface SERootViewController : UITabBarController
 
 @end

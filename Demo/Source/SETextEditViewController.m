@@ -48,13 +48,18 @@
     
     _editRange = self.textView.selectedRange;
     SETextAttributesPickerViewController * textAttributes = [[SETextAttributesPickerViewController alloc] init];
+    NSDictionary * attributes = nil;
     if ( [self.textView respondsToSelector:@selector(setAttributedText:)]){
         if (_editRange.length == 0 && _editRange.location == INT32_MAX){
             _editRange = NSMakeRange(0, self.textView.attributedText.length);
-        }        
-        textAttributes.delegate = self;
-        textAttributes.attributes = [self.textView.attributedText attributesAtIndex:_editRange.location longestEffectiveRange:NULL inRange:_editRange];
+        }
+        attributes = [self.textView.attributedText attributesAtIndex:_editRange.location longestEffectiveRange:NULL inRange:_editRange];
+    } else {
+        attributes = @{NSFontAttributeName:self.textView.font, NSUnderlineStyleAttributeName:@(NSUnderlineStyleNone), NSStrikethroughStyleAttributeName:@(NSUnderlineStyleNone)};
     }
+    textAttributes.delegate = self;
+    textAttributes.attributes = attributes;
+
     if ([[UIDevice currentDevice] userInterfaceIdiom] ==  UIUserInterfaceIdiomPad && self.popOver == nil ){
         self.popOver = [[UIPopoverController alloc] initWithContentViewController:textAttributes];
         [self.popOver presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];

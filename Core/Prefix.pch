@@ -1,13 +1,12 @@
 //
 // Prefix header for all source files of the 'Core' target in the 'Core' project
 //
+#import <Availability.h>
 
 #ifdef __OBJC__
     #import <Foundation/Foundation.h>
     #import <UIKit/UIKit.h>
     #import <CoreText/CoreText.h>
+    #import "SEFontKit.h"
 #endif
 
-#if __IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_6_0
-@compatibility_alias NSFontAttributeName kCTFontAttributeName;
-#endif

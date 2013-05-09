@@ -12,14 +12,13 @@
 #import "SETextEditViewController.h"
 #import "SEDetailViewController.h"
 #import "SEFontManager.h"
-#import "SERootViewController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = [[SERootViewController alloc] initWithNibName:nil bundle:nil];
+    self.window.rootViewController = [self rootViewController];
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -50,6 +49,45 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (UIViewController*)rootViewController
+{    
+	UITabBarController * tabController = [[UITabBarController alloc] init];
+    UINavigationController *navigationController;
+    UISplitViewController *splitViewController;
+    NSArray * viewControllers = nil;
+    // Override point for customization after application launch.
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        SEMasterViewController *masterViewController = [[SEMasterViewController alloc] initWithNibName:@"SEMasterViewController" bundle:nil];
+        navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+        navigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Metrics" image:nil tag:0];
+        
+        UINavigationController * textEditViewController = [[UINavigationController alloc] initWithRootViewController:[[SETextEditViewController alloc] init]];
+        textEditViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Picker" image:nil tag:1];
+        
+        viewControllers = @[navigationController, textEditViewController];
+    } else {
+        SEMasterViewController *masterViewController = [[SEMasterViewController alloc] initWithNibName:@"SEMasterViewController" bundle:nil];
+        UINavigationController *masterNavigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
+        
+        SEDetailViewController *detailViewController = [[SEDetailViewController alloc] initWithNibName:@"SEDetailViewController" bundle:nil];
+        UINavigationController *detailNavigationController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
+    	
+    	masterViewController.detailViewController = detailViewController;
+    	
+        splitViewController = [[UISplitViewController alloc] init];
+        splitViewController.viewControllers = [NSArray arrayWithObjects:masterNavigationController, detailNavigationController, nil];
+        splitViewController.delegate = detailViewController;
+        splitViewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Metrics" image:nil tag:0];
+        
+        navigationController = [[UINavigationController alloc] initWithRootViewController:[[SETextEditViewController alloc] init]];
+        navigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Picker" image:nil tag:1];
+        
+        viewControllers = @[splitViewController, navigationController];
+    }
+    tabController.viewControllers = viewControllers;
+    return tabController;
 }
 
 @end

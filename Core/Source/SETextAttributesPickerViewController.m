@@ -9,8 +9,16 @@
 #import "SETextAttributesPickerViewController.h"
 #import "SEFontPickerViewController.h"
 
-const NSInteger SE_MaxFontSize = 60;
-const NSInteger SE_MinFontSize = 8;
+const NSInteger SE_MaxFontSize = 100;
+const NSInteger SE_MinFontSize = 1;
+
+typedef NS_ENUM(NSUInteger, SETextAttributes){
+    SETextAttributesFamily = 0,
+    SETextAttributesSize,
+    SETextAttributesStroke,
+    SETextAttributesUnderline,
+    SETextAttributesCount,
+};
 
 @interface SETextAttributesPickerViewController () <SEFontPickerViewControllerDelegage>
 
@@ -48,6 +56,7 @@ const NSInteger SE_MinFontSize = 8;
     [self.fontSizeCell.contentView addSubview: self.fontSize];
     self.fontSizeSegment = [[UISegmentedControl alloc] initWithItems:@[@"-",@"+"]];
     self.fontSizeSegment.momentary = YES;
+    [self.fontSizeSegment setSegmentedControlStyle:UISegmentedControlStyleBar];
     [self.fontSizeSegment addTarget:self action:@selector(sizeChanged:) forControlEvents:UIControlEventValueChanged];
     self.fontSizeCell.accessoryView = self.fontSizeSegment;
     self.fontSizeCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -78,34 +87,37 @@ const NSInteger SE_MinFontSize = 8;
 }
 
 - (void)refreshView {
-    self.font = [self.attributes objectForKey:(NSString *)NSFontAttributeName];
+    if (self.attributes == nil) return;
+    NSString * test = NSFontAttributeName;
+    NSLog(@"%@",test);
+    self.font = self.attributes[NSFontAttributeName];
     if ( self.font == nil){
         self.font = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     }
     self.fontFamilyCell.textLabel.text = self.font.fontName;
     self.fontSizeCell.textLabel.text = [NSString stringWithFormat:@"Size: %i pt", (int)_font.pointSize ];
     
-    self.fontTraitsUnderlineCell.accessoryType = [self.attributes objectForKey:(NSString *)kCTUnderlineStyleAttributeName] == nil ? UITableViewCellAccessoryNone:UITableViewCellAccessoryCheckmark;
+    self.fontTraitsUnderlineCell.accessoryType = self.attributes[NSUnderlineStyleAttributeName] == nil ? UITableViewCellAccessoryNone:UITableViewCellAccessoryCheckmark;
     
-    self.fontTraitsStrokeCell.accessoryType = [self.attributes objectForKey:(NSString *)kCTStrokeWidthAttributeName] == nil ? UITableViewCellAccessoryNone:UITableViewCellAccessoryCheckmark;
+    self.fontTraitsStrokeCell.accessoryType = self.attributes[NSStrikethroughStyleAttributeName] == nil ? UITableViewCellAccessoryNone:UITableViewCellAccessoryCheckmark;
 }
 
 - (void)updateAttributes {
     
     NSMutableDictionary * attributes = [NSMutableDictionary dictionaryWithDictionary:self.attributes];
-    [attributes setObject:self.font forKey:(NSString *)NSFontAttributeName];
+    attributes[NSFontAttributeName] = self.font;
     
     if ( self.fontTraitsUnderlineCell.accessoryType == UITableViewCellAccessoryCheckmark){
-        [attributes setObject:@(NSUnderlineStyleSingle) forKey:(NSString *)kCTUnderlineStyleAttributeName];
+        attributes[NSUnderlineStyleAttributeName]=@(NSUnderlineStyleSingle);
     } else {
-        [attributes removeObjectForKey:(NSString *)kCTUnderlineStyleAttributeName];
+        [attributes removeObjectForKey:(NSString *)NSUnderlineStyleAttributeName];
     }
     
-//    if ( self.fontTraitsStrokeCell.accessoryType == UITableViewCellAccessoryCheckmark){
-//        [attributes setObject:@(NSUnderlineStyleSingle) forKey:(NSString *)kCTStrokeWidthAttributeName];
-//    } else {
-//        [attributes removeObjectForKey:(NSString *)kCTStrokeWidthAttributeName];
-//    }
+    if ( self.fontTraitsStrokeCell.accessoryType == UITableViewCellAccessoryCheckmark){
+        attributes[NSStrikethroughStyleAttributeName]=@(NSUnderlineStyleSingle);
+    } else {
+        [attributes removeObjectForKey:(NSString *)NSStrikethroughStyleAttributeName];
+    }
     
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(textAttributesPickerViewController:selectedAttributes:)]){
         [self.delegate textAttributesPickerViewController:self selectedAttributes:attributes];
@@ -123,7 +135,7 @@ const NSInteger SE_MinFontSize = 8;
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return 4;
+            return SETextAttributesCount;
             break;
         default:
             break;
@@ -134,16 +146,16 @@ const NSInteger SE_MinFontSize = 8;
 - (UITableViewCell*) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0){
         switch (indexPath.row) {
-            case 0:            
+            case SETextAttributesFamily:
                 return self.fontFamilyCell;
                 break;
-            case 1:
+            case SETextAttributesSize:
                 return self.fontSizeCell;
                 break;
-            case 2:
+            case SETextAttributesStroke:
                 return self.fontTraitsStrokeCell;
                 break;
-            case 3:
+            case SETextAttributesUnderline:
                 return self.fontTraitsUnderlineCell;
                 break;
         }
@@ -169,16 +181,16 @@ const NSInteger SE_MinFontSize = 8;
     switch (indexPath.section){
         case(0):
             switch (indexPath.row) {
-                case(0):{
+                case(SETextAttributesFamily):{
                         SEFontPickerViewController * fp = [[SEFontPickerViewController alloc] init];
                         fp.modalPresentationStyle = UIModalPresentationCurrentContext;
                         fp.delegate = self;
-                        [self presentViewController:fp animated:YES completion:nil];
+                        [self presentModalViewController:fp animated:YES];
                         [tableView deselectRowAtIndexPath:indexPath animated:NO];
                     }
                     break;
-                case(2):
-                case(3):{
+                case(SETextAttributesStroke):
+                case(SETextAttributesUnderline):{
                     UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
                     cell.accessoryType = cell.accessoryType == UITableViewCellAccessoryCheckmark ? UITableViewCellAccessoryNone:UITableViewCellAccessoryCheckmark;
                     [self updateAttributes];

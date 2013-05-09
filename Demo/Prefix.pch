@@ -13,5 +13,6 @@
     #import <Foundation/Foundation.h>
     #import <CoreText/CoreText.h>
     #import <QuartzCore/QuartzCore.h>
+    #import "SEFontKit.h"    
 #endif
 

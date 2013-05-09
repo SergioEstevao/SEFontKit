@@ -33,7 +33,7 @@
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 }
 
-- (void)viewDidLoad
+- (void)rootViewController
 {
     [super viewDidLoad];
 	UITabBarController * tabController = [[UITabBarController alloc] init];
@@ -68,8 +68,7 @@
         viewControllers = @[self.splitViewController, self.navigationController];
     }
     tabController.viewControllers = viewControllers;
-    [self.view addSubview:tabController.view];
-    [self addChildViewController:tabController];
+    return tabController;
 }
 
 - (void)didReceiveMemoryWarning
