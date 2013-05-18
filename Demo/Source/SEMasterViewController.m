@@ -183,10 +183,18 @@
     
     NSString * searchText = searchBar.text;
     if (self.editing){
-        NSURL * url = [NSURL URLWithString:searchText];
-        if (!url) return;
+        NSURL * url = [NSURL URLWithString:[searchText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+        if (!url) {
+            UIAlertView * message = [[UIAlertView alloc] initWithTitle:@"Font Loading"
+                                                               message:[NSString stringWithFormat:@"Problems loading font:%@", @"Invalid URL"]
+                                                              delegate:nil
+                                                     cancelButtonTitle:@"OK"
+                                                     otherButtonTitles:nil];
+            [message show];
+            return;
+        }
         NSError * error = nil;
-        [[SEFontManager sharedFontManager] addFontFromURL:[NSURL URLWithString:searchText] error:&error];
+        [[SEFontManager sharedFontManager] addFontFromURL:url error:&error];
         if (error){
             UIAlertView * message = [[UIAlertView alloc] initWithTitle:@"Font Loading"
                                                                message:[NSString stringWithFormat:@"Problems loading font:%@", [error localizedDescription]]
