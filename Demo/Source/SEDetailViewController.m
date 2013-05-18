@@ -25,6 +25,16 @@ const NSInteger MinFontSize = 8;
 
 @implementation SEDetailViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.title = NSLocalizedString(@"Font Detail", @"Font Detail");
+        self.detailItem = [[UIFont systemFontOfSize:[UIFont systemFontSize]] fontName];
+    }
+    return self;
+}
+
 #pragma mark - Managing the detail item
 
 - (void)setDetailItem:(id)newDetailItem
@@ -100,14 +110,7 @@ const NSInteger MinFontSize = 8;
 - (void) didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
     [self configureView];
 }
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        self.title = NSLocalizedString(@"Font Detail", @"Font Detail");
-    }
-    return self;
-}
+
 							
 #pragma mark - Split view
 
