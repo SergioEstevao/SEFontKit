@@ -69,7 +69,7 @@ NSMutableDictionary * _fontsDownloaded;
         return NO;
     }
     baseFolder = [baseFolder URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.ttf",name]];
-    result = [data writeToURL:baseFolder atomically:NO];
+    result = [data writeToURL:baseFolder options:NSDataWritingAtomic error:error];
     if (!result){
         return NO;
     }
