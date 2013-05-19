@@ -209,24 +209,24 @@ const NSInteger MinFontSize = 8;
                     cell.accessoryView.backgroundColor = self.fontMetrics.ascenderColor;
                     break;
                 case (3):
-                    cell.textLabel.text = NSLocalizedString(@"Descender",@"Descender");
-                    cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.descender] stringValue];
-                    cell.accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0,0,22,44)];
-                    cell.accessoryView.backgroundColor = self.fontMetrics.descenderColor;
-                    break;
-                case (4):
                     cell.textLabel.text = NSLocalizedString(@"Cap Height",@"Cap Height");
                     cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.capHeight] stringValue];
                     cell.accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0,0,22,44)];
                     cell.accessoryView.backgroundColor = self.fontMetrics.capColor;
                     break;
-                case (5):
+                case (4):
                     cell.textLabel.text = NSLocalizedString(@"x Height",@"x Height");
                     cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.xHeight] stringValue];
                     cell.accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0,0,22,44)];
-                    cell.accessoryView.backgroundColor = self.fontMetrics.xColor;
-
+                    cell.accessoryView.backgroundColor = self.fontMetrics.xColor;                    
                     break;
+                case (5):
+                    cell.textLabel.text = NSLocalizedString(@"Descender",@"Descender");
+                    cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.descender] stringValue];
+                    cell.accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0,0,22,44)];
+                    cell.accessoryView.backgroundColor = self.fontMetrics.descenderColor;
+                    break;
+                
     
             }
             break;
