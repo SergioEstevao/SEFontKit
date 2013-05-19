@@ -10,6 +10,7 @@
 
 @property (strong, nonatomic) id detailItem;
 - (IBAction)sizeChanged:(UISegmentedControl *)sender;
+- (IBAction)textChanged:(id)sender;
 
 
 @end

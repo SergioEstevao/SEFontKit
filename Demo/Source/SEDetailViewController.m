@@ -9,7 +9,7 @@
 #import "SEDetailViewController.h"
 #import "SEFontMetricsView.h"
 
-const NSInteger MaxFontSize = 60;
+const NSInteger MaxFontSize = 80;
 const NSInteger MinFontSize = 8;
 
 @interface SEDetailViewController () {
@@ -65,16 +65,16 @@ const NSInteger MinFontSize = 8;
     self.fontMetrics.superview.frame = CGRectMake(self.fontMetrics.superview.frame.origin.x, 
                                                   self.fontMetrics.superview.frame.origin.y, 
                                                   self.fontMetrics.superview.frame.size.width, 
-                                                  fmax(70,self.font.lineHeight)); 
+                                                  fmax(MaxFontSize,self.font.lineHeight)); 
     self.fontMetrics.font = self.font;
     self.fontMetrics.frame = CGRectMake(self.fontMetrics.frame.origin.x, 
                                         roundf((self.fontMetrics.superview.frame.size.height-self.font.lineHeight)/2), 
                                         self.fontMetrics.frame.size.width,
                                         self.font.lineHeight);
     self.detailsTable.frame = CGRectMake(0, 
-                                         fmax(70,self.font.lineHeight), 
+                                         fmax(MaxFontSize,self.font.lineHeight), 
                                          self.detailsTable.frame.size.width, 
-                                         self.view.frame.size.height-fmax(70,self.font.lineHeight));    
+                                         self.view.frame.size.height-fmax(MaxFontSize,self.font.lineHeight));    
     [self.fontMetrics setNeedsDisplay];
     [self.detailsTable reloadData];
 }
@@ -85,6 +85,14 @@ const NSInteger MinFontSize = 8;
     self.detailsTable.delegate = self;
     self.detailsTable.dataSource = self;
     fontSize = [UIFont systemFontSize];
+    if ( [[self class] fontMetricsSize] != 0){
+        fontSize = [[self class] fontMetricsSize];
+    }
+    
+    if ( [[self class] fontMetricsText] != nil){
+        self.fontMetrics.text = [[self class] fontMetricsText];
+    }
+
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
 }
@@ -254,6 +262,31 @@ const NSInteger MinFontSize = 8;
     if ( fontSize < MinFontSize){
         fontSize = MinFontSize;
     }
+    [[self class] setFontMetricsSize:fontSize];
     [self configureView];
 }
+
+- (IBAction)textChanged:(id)sender {
+    [[self class] setFontMetricsText:[sender text]];
+}
+
+
++ (NSString*)fontMetricsText {
+	return [[NSUserDefaults standardUserDefaults] objectForKey:@"com.sergioestevao.fontmetrics.fonttext"];
+}
+
++ (void)setFontMetricsText:(NSString*)newValue {
+	[[NSUserDefaults standardUserDefaults] setObject:newValue forKey:@"com.sergioestevao.fontmetrics.fonttext"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
++ (float)fontMetricsSize {
+	return [[NSUserDefaults standardUserDefaults] floatForKey:@"com.sergioestevao.fontmetrics.fontsize"];
+}
+
++ (void)setFontMetricsSize:(float)newValue {
+	[[NSUserDefaults standardUserDefaults] setFloat:newValue forKey:@"com.sergioestevao.fontmetrics.fontsize"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 @end
