@@ -19,6 +19,7 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
+@property (strong, nonatomic) IBOutlet UILabel *messageLabel;
 
 @end
 
@@ -83,6 +84,16 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if ([self.tableView isEditing]){
+        self.messageLabel.text = @"No custom fonts loaded.\nProvide an URL for a font and press Search.";
+    } else {
+        self.messageLabel.text = @"No fonts available with that criteria.";
+    }
+    if ([_fontFamilies count] == 0){
+        [self.view bringSubviewToFront:self.messageLabel];
+    } else {
+        [self.view sendSubviewToBack:self.messageLabel];
+    }
     return _fontFamilies.count;
 }
 
