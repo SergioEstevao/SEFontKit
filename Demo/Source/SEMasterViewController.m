@@ -14,7 +14,8 @@
 
 @interface SEMasterViewController () {
     NSMutableArray *_fontFamilies;
-    NSMutableArray *_fonts;        
+    NSMutableArray *_fonts;
+    NSMutableArray * _fontIndex;
 }
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -32,15 +33,7 @@
     if (!self) {
         return nil;
     }
-    
-    self.title = NSLocalizedString(@"Fonts", @"Fonts");
-    
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        //self.clearsSelectionOnViewWillAppear = NO;
-        self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
-    }
-    [self searchFont:@""];
-    
+        
     return self;
 }
 							
@@ -48,6 +41,14 @@
 {
     [super viewDidLoad];
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+    self.title = NSLocalizedString(@"Fonts", @"Fonts");
+    
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+        //self.clearsSelectionOnViewWillAppear = NO;
+        self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+    }
+    _fontIndex = [NSMutableArray array];
+    [self searchFont:@""];
 }
 
 - (void)viewDidUnload
@@ -82,6 +83,18 @@
 
 #pragma mark - Table View
 
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
+    return [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1, 1)];
+}
+
+- (CGFloat )tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    return 1;
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+    return _fontIndex;
+}
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     if ([self.tableView isEditing]){
@@ -91,8 +104,10 @@
     }
     if ([_fontFamilies count] == 0){
         [self.view bringSubviewToFront:self.messageLabel];
+        [tableView setBackgroundColor:[UIColor colorWithWhite:0.88 alpha:1]];
     } else {
         [self.view sendSubviewToBack:self.messageLabel];
+        [tableView setBackgroundColor:[UIColor whiteColor]];
     }
     return _fontFamilies.count;
 }
@@ -172,6 +187,10 @@
     }
     
     [_fontFamilies sortUsingSelector:@selector(compare:)];
+    [_fontIndex removeAllObjects];
+    for (NSString * string in _fontFamilies){
+        [_fontIndex addObject:[string substringToIndex:1]];
+    }    
     
     _fonts = [NSMutableArray arrayWithCapacity:_fontFamilies.count];
     
