@@ -215,7 +215,7 @@
             [message show];
         } else {
             UIAlertView * message = [[UIAlertView alloc] initWithTitle:@"Font Loading"
-                                                               message:@"Font Loaded sucessfully"
+                                                               message:@"Font added sucessfully."
                                                               delegate:nil
                                                      cancelButtonTitle:@"OK"
                                                      otherButtonTitles:nil];
