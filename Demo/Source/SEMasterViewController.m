@@ -170,6 +170,7 @@
 
 - (void) findFont:(NSString *) fontName {
     [self.navigationController popToRootViewControllerAnimated:NO];
+    [self setEditing:NO animated:NO];
     [self searchFont:@""];
     int section = 0;
     NSUInteger row = NSNotFound;
