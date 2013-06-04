@@ -49,7 +49,7 @@ NSMutableDictionary * _fontsDownloaded;
     }];
 }
 
-- (BOOL) addFontFromURL:(NSURL *) url error:(NSError **)error{
+- (NSString *) addFontFromURL:(NSURL *) url error:(NSError **)error{
     NSData * data = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:error];
     if (data == nil || data.length == 0){
         return NO;
@@ -59,7 +59,7 @@ NSMutableDictionary * _fontsDownloaded;
     
     if (name == nil){
         // There was a problem registering the font
-        return NO;
+        return nil;
     }
     
     NSURL * baseFolder = [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask][0];
@@ -78,7 +78,7 @@ NSMutableDictionary * _fontsDownloaded;
     // save it to userDefaults
     [[NSUserDefaults standardUserDefaults] setObject:_fontsDownloaded forKey:DownloadedFonts];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    return YES;
+    return name;
 }
 
 - (BOOL) removeFontByName:(NSString *) name {
