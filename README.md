@@ -21,3 +21,25 @@ A view controller that allows you to pick a font from the system.
 ###SETextAttributesPickerViewController
 
 A viewController that allows you to configure the attributes for an attributed string.
+
+## Demo
+
+Build and run the `Demo` project in Xcode to see `SEFontKit` in action.
+
+## Requirements
+
+`SEFontKit` is compatible with iOS 4.3+ as a deployment target, but must be compiled using the iOS 6 SDK. If you get compiler errors for undefined constants, try upgrading to the latest version of Xcode, and updating your project to the recommended build settings.
+
+`SEFontKit` also requires the `CoreText` and `Core Graphics` frameworks. If you're installing with CocoaPods these frameworks will automatically be linked for you, otherwise you will have to add them to your project.
+
+## Contact
+
+Sergio Estevao
+
+- http://github.com/SergioEstevao
+- http://twitter.com/SergioEstevao
+- sergioestevao@gmail.com
+
+## License
+
+SEFontKit is available under the MIT license. See the LICENSE file for more info.
