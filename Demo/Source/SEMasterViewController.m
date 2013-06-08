@@ -15,7 +15,6 @@
 @interface SEMasterViewController () {
     NSMutableArray *_fontFamilies;
     NSMutableArray *_fonts;
-    NSMutableArray * _fontIndex;
 }
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
@@ -47,7 +46,6 @@
         //self.clearsSelectionOnViewWillAppear = NO;
         self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
     }
-    _fontIndex = [NSMutableArray array];
     [self searchFont:@""];
 }
 
@@ -89,10 +87,6 @@
 
 - (CGFloat )tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 1;
-}
-
-- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
-    return _fontIndex;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -174,6 +168,24 @@
     }
 }
 
+- (void) findFont:(NSString *) fontName {
+    [self.navigationController popToRootViewControllerAnimated:NO];
+    [self setEditing:NO animated:NO];
+    [self searchFont:@""];
+    int section = 0;
+    NSUInteger row = NSNotFound;
+    for (NSArray * fonts in _fonts){
+        row = [fonts indexOfObject:fontName];
+        if (row != NSNotFound) break;
+        section++;
+    }
+    
+    if (row == NSNotFound) return;
+    
+    [self.tableView selectRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section] animated:YES scrollPosition:UITableViewScrollPositionTop];
+    [self tableView:self.tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
+}
+
 #pragma mark - Search Bar
 
 - (void)searchFont:(NSString *)searchText {
@@ -187,10 +199,6 @@
     }
     
     [_fontFamilies sortUsingSelector:@selector(compare:)];
-    [_fontIndex removeAllObjects];
-    for (NSString * string in _fontFamilies){
-        [_fontIndex addObject:[string substringToIndex:1]];
-    }    
     
     _fonts = [NSMutableArray arrayWithCapacity:_fontFamilies.count];
     
@@ -234,7 +242,7 @@
             [message show];
         } else {
             UIAlertView * message = [[UIAlertView alloc] initWithTitle:@"Font Loading"
-                                                               message:@"Font Loaded sucessfully"
+                                                               message:@"Font added sucessfully."
                                                               delegate:nil
                                                      cancelButtonTitle:@"OK"
                                                      otherButtonTitles:nil];

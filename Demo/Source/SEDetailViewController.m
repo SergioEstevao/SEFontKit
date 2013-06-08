@@ -186,7 +186,7 @@ const NSInteger MinFontSize = 8;
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier];
     }
-    
+    [cell.accessoryView setBackgroundColor:[UIColor clearColor]];
     switch (indexPath.section) {
         case 0:
             switch (indexPath.row){

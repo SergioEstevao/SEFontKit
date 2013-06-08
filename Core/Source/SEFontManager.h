@@ -12,7 +12,7 @@
 
 + (SEFontManager *)sharedFontManager;
 
-- (BOOL) addFontFromURL:(NSURL *) url error:(NSError **)error;
+- (NSString *) addFontFromURL:(NSURL *) url error:(NSError **)error;
 
 - (BOOL) removeFontByName:(NSString *) name;
 

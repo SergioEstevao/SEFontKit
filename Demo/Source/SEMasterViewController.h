@@ -13,4 +13,6 @@
 
 @property (strong, nonatomic) SEDetailViewController *detailViewController;
 
+- (void) findFont:(NSString *) fontName;
+
 @end
