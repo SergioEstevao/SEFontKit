@@ -41,25 +41,33 @@
 @implementation SEMasterViewController
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (!self) {
-        return nil;
-    }
-        
-    return self;
+- (void) loadView {
+    self.view = [[UIScrollView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
+    self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    
 }
-							
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40)];
+    self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.searchBar.delegate = self;
+    [self.view addSubview:self.searchBar];
+    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.searchBar.frame), self.view.bounds.size.width, self.view.bounds.size.height-self.searchBar.frame.size.height-self.tabBarController.tabBar.bounds.size.height)];
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    [self.view addSubview:self.tableView];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.title = NSLocalizedString(@"Fonts", @"Fonts");
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         //self.clearsSelectionOnViewWillAppear = NO;
-        self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
+        self.contentSizeForViewInPopover = CGSizeMake(320.0, self.view.frame.size.height);
     }
     [self searchFont:@""];
 }
