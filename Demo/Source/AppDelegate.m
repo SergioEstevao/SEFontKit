@@ -101,7 +101,6 @@
         
         viewControllers = @[splitViewController, navigationController];
     }
-    tabController.tabBar.translucent = NO;
     tabController.viewControllers = viewControllers;
     return tabController;
 }
