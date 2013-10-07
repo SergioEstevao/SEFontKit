@@ -72,28 +72,48 @@
     CGContextStrokePath(context);
     
     //ascender
-    CGContextMoveToPoint(context, 0, ascender);
+    CGContextMoveToPoint(context, 5, ascender);
     CGContextAddLineToPoint(context, self.frame.size.width, ascender);
+	CGContextSetStrokeColorWithColor(context, self.ascenderColor.CGColor);
+    CGContextStrokePath(context);
+    CGContextMoveToPoint(context, 5, baseLine);
+    CGContextAddLineToPoint(context, 5, ascender);
 	CGContextSetStrokeColorWithColor(context, self.ascenderColor.CGColor);
     CGContextStrokePath(context);
     
     //descender
-    CGContextMoveToPoint(context, 0, descender);
+    CGContextMoveToPoint(context, 5, descender);
     CGContextAddLineToPoint(context, self.frame.size.width, descender);    
 	CGContextSetStrokeColorWithColor(context, self.descenderColor.CGColor);
 	CGContextStrokePath(context);
     
+    CGContextMoveToPoint(context, 5, baseLine);
+    CGContextAddLineToPoint(context, 5, descender);
+	CGContextSetStrokeColorWithColor(context, self.descenderColor.CGColor);
+	CGContextStrokePath(context);
+    
     //caps
-    CGContextMoveToPoint(context, 0, capHeight);
+    CGContextMoveToPoint(context, 10, capHeight);
     CGContextAddLineToPoint(context, self.frame.size.width, capHeight);
 	CGContextSetStrokeColorWithColor(context, self.capColor.CGColor);
     CGContextStrokePath(context);
     
+    CGContextMoveToPoint(context, 10, baseLine);
+    CGContextAddLineToPoint(context, 10, capHeight);
+	CGContextSetStrokeColorWithColor(context, self.capColor.CGColor);
+    CGContextStrokePath(context);
+    
     //x
-    CGContextMoveToPoint(context, 0, xHeight);
+    CGContextMoveToPoint(context, 15, xHeight);
     CGContextAddLineToPoint(context, self.frame.size.width, xHeight);    
 	CGContextSetStrokeColorWithColor(context, self.xColor.CGColor);
 	CGContextStrokePath(context);
+    
+    CGContextMoveToPoint(context, 15, baseLine);
+    CGContextAddLineToPoint(context, 15, xHeight);
+	CGContextSetStrokeColorWithColor(context, self.xColor.CGColor);
+	CGContextStrokePath(context);
+
 }
 
 
