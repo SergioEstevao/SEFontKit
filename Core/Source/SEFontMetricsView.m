@@ -59,8 +59,8 @@
     // Drawing code
     CGContextRef context = UIGraphicsGetCurrentContext ();
     
-    CGFloat baseLine = self.font.lineHeight + self.font.descender -1.0f;
-    CGFloat ascender = ceilf(baseLine -  self.font.ascender);
+    CGFloat baseLine = self.font.lineHeight + self.font.descender;
+    CGFloat ascender = MAX(floorf(baseLine -  self.font.ascender),0);
     CGFloat descender = ceilf(baseLine - self.font.descender);
     CGFloat capHeight = ceilf(baseLine -  self.font.capHeight);
     CGFloat xHeight = ceilf(baseLine - self.font.xHeight);
