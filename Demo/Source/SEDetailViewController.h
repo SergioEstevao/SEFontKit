@@ -21,11 +21,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-@interface SEDetailViewController : UIViewController <UISplitViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface SEDetailViewController : UITableViewController <UISplitViewControllerDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (strong, nonatomic) id detailItem;
-- (IBAction)sizeChanged:(UISegmentedControl *)sender;
-- (IBAction)textChanged:(id)sender;
-
 
 @end

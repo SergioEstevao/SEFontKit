@@ -26,14 +26,16 @@
 
 const NSInteger MaxFontSize = 80;
 const NSInteger MinFontSize = 8;
+const CGRect MetricColorLabelSize = {0,0,22,44};
+const CGFloat Paddding = 10;
 
 @interface SEDetailViewController () {
     NSInteger fontSize;
 }
 @property (strong, nonatomic) UIPopoverController *masterPopoverController;
 @property (strong, nonatomic) UIFont * font;
-@property (strong, nonatomic) IBOutlet UITableView *detailsTable;
 @property (strong, nonatomic) IBOutlet SEFontMetricsView *fontMetrics;
+@property (strong, nonatomic) IBOutlet UIView *headerView;
 
 - (void)configureView;
 @end
@@ -76,29 +78,33 @@ const NSInteger MinFontSize = 8;
     
     self.font = [UIFont fontWithName:self.detailItem size:fontSize];
     self.title = self.detailItem;
-    
-    self.fontMetrics.superview.frame = CGRectMake(self.fontMetrics.superview.frame.origin.x, 
-                                                  self.fontMetrics.superview.frame.origin.y, 
-                                                  self.fontMetrics.superview.frame.size.width, 
-                                                  fmax(MaxFontSize,self.font.lineHeight)); 
     self.fontMetrics.font = self.font;
-    self.fontMetrics.frame = CGRectMake(self.fontMetrics.frame.origin.x, 
-                                        roundf((self.fontMetrics.superview.frame.size.height-self.font.lineHeight)/2), 
+    self.headerView.frame = CGRectIntegral(CGRectMake(self.fontMetrics.frame.origin.x,
+                                       0,
+                                       self.fontMetrics.frame.size.width,
+                                       self.font.lineHeight+2+Paddding));
+    self.fontMetrics.frame = CGRectIntegral(CGRectMake(self.fontMetrics.frame.origin.x,
+                                        Paddding/2,
                                         self.fontMetrics.frame.size.width,
-                                        self.font.lineHeight);
-    self.detailsTable.frame = CGRectMake(0, 
-                                         fmax(MaxFontSize,self.font.lineHeight), 
-                                         self.detailsTable.frame.size.width, 
-                                         self.view.frame.size.height-fmax(MaxFontSize,self.font.lineHeight));    
+                                        self.font.lineHeight+2));
+    self.tableView.tableHeaderView = self.headerView;
     [self.fontMetrics setNeedsDisplay];
-    [self.detailsTable reloadData];
+    [self.tableView reloadData];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.detailsTable.delegate = self;
-    self.detailsTable.dataSource = self;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 100+Paddding)];
+    self.fontMetrics = [[SEFontMetricsView alloc] initWithFrame:CGRectMake(0, Paddding/2, self.view.frame.size.width, 100)];
+    self.fontMetrics.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.fontMetrics.text = @"F f G g";
+    self.fontMetrics.textAlignment = NSTextAlignmentCenter;
+    self.fontMetrics.delegate = self;
+    [self.headerView addSubview:self.fontMetrics];
+    
     fontSize = [UIFont systemFontSize];
     if ( [[self class] fontMetricsSize] != 0){
         fontSize = [[self class] fontMetricsSize];
@@ -114,7 +120,7 @@ const NSInteger MinFontSize = 8;
 
 - (void)viewDidUnload
 {
-    [self setDetailsTable:nil];
+    [self setTableView:nil];
     [self setFontMetrics:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
@@ -165,10 +171,10 @@ const NSInteger MinFontSize = 8;
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch (section) {
         case 0:
-            return @"Font Name";
+            return NSLocalizedString(@"Font Name",@"Font Name");
             break;
         case 1:
-            return @"Font Metrics";
+            return NSLocalizedString(@"Font Metrics",@"Font Metrics");
             break;
         default:
             return 0;
@@ -202,6 +208,8 @@ const NSInteger MinFontSize = 8;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier];
     }
     [cell.accessoryView setBackgroundColor:[UIColor clearColor]];
+    cell.accessoryView = nil;
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     switch (indexPath.section) {
         case 0:
             switch (indexPath.row){
@@ -217,9 +225,17 @@ const NSInteger MinFontSize = 8;
             break;
         case 1:
             switch (indexPath.row){
-                case (0):
+                case (0):{
                     cell.textLabel.text = NSLocalizedString(@"Point Size",@"Point Size");
                     cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.pointSize] stringValue];
+                    UIStepper * stepper = [[UIStepper alloc] initWithFrame:CGRectZero];
+                    stepper.minimumValue = MinFontSize;
+                    stepper.maximumValue = MaxFontSize;
+                    stepper.stepValue = 1.0;
+                    stepper.value = fontSize;
+
+                    [stepper addTarget:self action:@selector(sizeChanged:) forControlEvents:UIControlEventValueChanged];
+                    cell.accessoryView = stepper;}
                     break;
                 case (1):
                     cell.textLabel.text = NSLocalizedString(@"Line Height",@"Line Height");
@@ -228,25 +244,25 @@ const NSInteger MinFontSize = 8;
                 case (2):
                     cell.textLabel.text = NSLocalizedString(@"Ascender",@"Ascender");
                     cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.ascender] stringValue];
-                    cell.accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0,0,22,44)];
+                    cell.accessoryView = [[UIView alloc] initWithFrame:MetricColorLabelSize];
                     cell.accessoryView.backgroundColor = self.fontMetrics.ascenderColor;
                     break;
                 case (3):
                     cell.textLabel.text = NSLocalizedString(@"Cap Height",@"Cap Height");
                     cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.capHeight] stringValue];
-                    cell.accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0,0,22,44)];
+                    cell.accessoryView = [[UIView alloc] initWithFrame:MetricColorLabelSize];
                     cell.accessoryView.backgroundColor = self.fontMetrics.capColor;
                     break;
                 case (4):
                     cell.textLabel.text = NSLocalizedString(@"x Height",@"x Height");
                     cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.xHeight] stringValue];
-                    cell.accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0,0,22,44)];
+                    cell.accessoryView = [[UIView alloc] initWithFrame:MetricColorLabelSize];
                     cell.accessoryView.backgroundColor = self.fontMetrics.xColor;                    
                     break;
                 case (5):
                     cell.textLabel.text = NSLocalizedString(@"Descender",@"Descender");
                     cell.detailTextLabel.text = [[NSNumber numberWithFloat:self.font.descender] stringValue];
-                    cell.accessoryView = [[UIView alloc] initWithFrame:CGRectMake(0,0,22,44)];
+                    cell.accessoryView = [[UIView alloc] initWithFrame:MetricColorLabelSize];
                     cell.accessoryView.backgroundColor = self.fontMetrics.descenderColor;
                     break;
                 
@@ -260,15 +276,8 @@ const NSInteger MinFontSize = 8;
     return cell;
 }
 
-- (IBAction)sizeChanged:(UISegmentedControl*)sender {
-    NSInteger change = 0;
-    if ( [sender selectedSegmentIndex] == 0){
-        change = -1;
-    } 
-    if ( [sender selectedSegmentIndex] ==1){
-        change = +1;
-    }
-    fontSize += change;
+- (IBAction)sizeChanged:(UIStepper*)sender {
+    fontSize = sender.value;
     
     if ( fontSize > MaxFontSize){
         fontSize = MaxFontSize;
@@ -285,6 +294,10 @@ const NSInteger MinFontSize = 8;
     [[self class] setFontMetricsText:[sender text]];
 }
 
+- (BOOL) textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
 
 + (NSString*)fontMetricsText {
 	return [[NSUserDefaults standardUserDefaults] objectForKey:@"com.sergioestevao.fontmetrics.fonttext"];

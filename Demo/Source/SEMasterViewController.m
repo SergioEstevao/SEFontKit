@@ -160,7 +160,7 @@
     NSString *object = [[_fonts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
 	    if (!self.detailViewController) {
-	        self.detailViewController = [[SEDetailViewController alloc] initWithNibName:@"SEDetailViewController" bundle:nil];
+	        self.detailViewController = [[SEDetailViewController alloc] init];
 	    }
 	    self.detailViewController.detailItem = object;
         [self.navigationController pushViewController:self.detailViewController animated:YES];

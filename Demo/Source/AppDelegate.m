@@ -86,7 +86,7 @@
         SEMasterViewController *masterViewController = [[SEMasterViewController alloc] init];
         UINavigationController *masterNavigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
         
-        SEDetailViewController *detailViewController = [[SEDetailViewController alloc] initWithNibName:@"SEDetailViewController" bundle:nil];
+        SEDetailViewController *detailViewController = [[SEDetailViewController alloc] init];
         UINavigationController *detailNavigationController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
     	
     	masterViewController.detailViewController = detailViewController;
