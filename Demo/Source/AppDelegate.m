@@ -74,7 +74,7 @@
     NSArray * viewControllers = nil;
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        SEMasterViewController *masterViewController = [[SEMasterViewController alloc] initWithNibName:@"SEMasterViewController" bundle:nil];
+        SEMasterViewController *masterViewController = [[SEMasterViewController alloc] init];
         navigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
         navigationController.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Metrics" image:nil tag:0];
         
@@ -83,10 +83,10 @@
         
         viewControllers = @[navigationController, textEditViewController];
     } else {
-        SEMasterViewController *masterViewController = [[SEMasterViewController alloc] initWithNibName:@"SEMasterViewController" bundle:nil];
+        SEMasterViewController *masterViewController = [[SEMasterViewController alloc] init];
         UINavigationController *masterNavigationController = [[UINavigationController alloc] initWithRootViewController:masterViewController];
         
-        SEDetailViewController *detailViewController = [[SEDetailViewController alloc] initWithNibName:@"SEDetailViewController" bundle:nil];
+        SEDetailViewController *detailViewController = [[SEDetailViewController alloc] init];
         UINavigationController *detailNavigationController = [[UINavigationController alloc] initWithRootViewController:detailViewController];
     	
     	masterViewController.detailViewController = detailViewController;

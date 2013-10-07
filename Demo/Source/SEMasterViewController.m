@@ -34,49 +34,54 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UISearchBar *searchBar;
-@property (strong, nonatomic) IBOutlet UILabel *messageLabel;
 
 @end
 
 @implementation SEMasterViewController
 
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (!self) {
-        return nil;
-    }
-        
-    return self;
+- (void) loadView {
+    self.view = [[UIScrollView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
+    self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.view.backgroundColor = [UIColor whiteColor];
 }
-							
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, 40)];
+    self.searchBar.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    self.searchBar.showsCancelButton = YES;
+    self.searchBar.delegate = self;
+    [self.view addSubview:self.searchBar];
+    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.searchBar.frame), self.view.bounds.size.width, self.view.bounds.size.height-self.searchBar.frame.size.height)];
+    self.tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    [self.view addSubview:self.tableView];
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
     self.title = NSLocalizedString(@"Fonts", @"Fonts");
     
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-        //self.clearsSelectionOnViewWillAppear = NO;
-        self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
-    }
+    //    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
+    //        //self.clearsSelectionOnViewWillAppear = NO;
+    //        self.contentSizeForViewInPopover = CGSizeMake(320.0, self.view.frame.size.height);
+    //    }
     [self searchFont:@""];
+}
+
+- (void) viewWillLayoutSubviews {
+    self.searchBar.frame = CGRectMake(0, 0, self.view.bounds.size.width, 40);
+    UIScrollView * scrollView = (UIScrollView*)self.view;
+    CGFloat extra = scrollView.contentInset.top+scrollView.contentInset.bottom;
+    self.tableView.frame = CGRectMake(0, CGRectGetMaxY(self.searchBar.frame), self.view.bounds.size.width, self.view.frame.size.height-self.searchBar.frame.size.height-extra);
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-    } else {
-        return YES;
-    }
 }
 
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated {
@@ -91,7 +96,7 @@
         self.searchBar.placeholder = @"Search font";
         self.searchBar.keyboardType = UIKeyboardTypeDefault;
     }
-
+    
 }
 
 #pragma mark - Table View
@@ -106,28 +111,27 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if ([self.tableView isEditing]){
-        self.messageLabel.text = @"No custom fonts loaded.\nProvide an URL for a font and press Search.";
-    } else {
-        self.messageLabel.text = @"No fonts available with that criteria.";
-    }
     if ([_fontFamilies count] == 0){
-        [self.view bringSubviewToFront:self.messageLabel];
-        [tableView setBackgroundColor:[UIColor colorWithWhite:0.88 alpha:1]];
-    } else {
-        [self.view sendSubviewToBack:self.messageLabel];
-        [tableView setBackgroundColor:[UIColor whiteColor]];
+        return 1;
     }
     return _fontFamilies.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if ([_fontFamilies count] == 0) return 0;
     return [[_fonts objectAtIndex:section] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [_fontFamilies objectAtIndex:section];    
+    if ([_fontFamilies count] == 0){
+        if ([self.tableView isEditing]){
+            return @"No custom fonts loaded.\nProvide an URL for a font and press Search.";
+        } else {
+            return @"No fonts available with that criteria.";
+        }
+    }
+    return [_fontFamilies objectAtIndex:section];
 }
 
 // Customize the appearance of table view cells.
@@ -142,8 +146,8 @@
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
     }
-
-
+    
+    
     NSString *fontName = [[_fonts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     cell.textLabel.text = fontName;
     cell.textLabel.font = [UIFont fontWithName:fontName size:[UIFont systemFontSize]];
@@ -156,7 +160,7 @@
     NSString *object = [[_fonts objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
 	    if (!self.detailViewController) {
-	        self.detailViewController = [[SEDetailViewController alloc] initWithNibName:@"SEDetailViewController" bundle:nil];
+	        self.detailViewController = [[SEDetailViewController alloc] init];
 	    }
 	    self.detailViewController.detailItem = object;
         [self.navigationController pushViewController:self.detailViewController animated:YES];
@@ -271,6 +275,8 @@
 
 - (void) searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     [searchBar resignFirstResponder];
+    self.searchBar.text = @"";
+    [self searchFont:@""];
 }
 
 - (void)searchUserFonts:(NSString *)searchText {
@@ -290,7 +296,7 @@
         if ( resultArray.count > 0){
             [_fontFamilies addObject:fontFamily];
             [_fonts addObject:resultArray];
-        }    
+        }
     }
     
     [self.tableView reloadData];
