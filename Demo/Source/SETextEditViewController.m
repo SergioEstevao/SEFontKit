@@ -65,7 +65,7 @@
     SETextAttributesPickerViewController * textAttributes = [[SETextAttributesPickerViewController alloc] init];
     NSDictionary * attributes = nil;
     if ( [self.textView respondsToSelector:@selector(setAttributedText:)]){
-        if (_editRange.length == 0 && _editRange.location == INT32_MAX){
+        if (_editRange.length == 0 ){
             _editRange = NSMakeRange(0, self.textView.attributedText.length);
         }
         attributes = [self.textView.attributedText attributesAtIndex:_editRange.location longestEffectiveRange:NULL inRange:_editRange];
