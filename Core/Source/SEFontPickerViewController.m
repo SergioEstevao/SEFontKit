@@ -124,7 +124,7 @@
     if (self.delegate != nil && [self.delegate respondsToSelector:@selector(fontPickerViewController:selectedFont:)]){
         [self.delegate fontPickerViewController:self selectedFont:font];
     }
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 

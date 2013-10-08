@@ -200,7 +200,7 @@ typedef NS_ENUM(NSUInteger, SETextAttributes){
                         SEFontPickerViewController * fp = [[SEFontPickerViewController alloc] init];
                         fp.modalPresentationStyle = UIModalPresentationCurrentContext;
                         fp.delegate = self;
-                        [self presentModalViewController:fp animated:YES];
+                        [self presentViewController:fp animated:YES completion:nil];
                         [tableView deselectRowAtIndexPath:indexPath animated:NO];
                     }
                     break;
