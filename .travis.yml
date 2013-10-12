@@ -1,0 +1,2 @@
+language: objective-c
+script: xctool -project SEFontKit.xcodeproj -scheme SEFontKit -sdk iphonesimulator -configuration Release
